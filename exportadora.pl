@@ -90,62 +90,74 @@ salida(pequenio, ninguno, interno).
 salida(_, alto, desecho).
 salida(_, medio, desecho).
 
-%fruta(Coloracion, mancha, cobertura, calibre, Defecto)
+% fruta(Coloracion, mancha, cobertura, calibre, Defecto)
 
 % Condiciones perfecto estado
-fruta(roja, _, ninguno, _, "sin defectos").
-fruta(negra, _, ninguno, _, "sin defectos").
-fruta(roja, nada, _, _, "sin defectos").
-fruta(negra, nada, _, _, "sin defectos").
+fruta(roja, _, ninguno, "sin defectos").
+fruta(negra, _, ninguno, "sin defectos").
+fruta(roja, nada, _, "sin defectos").
+fruta(negra, nada, _, "sin defectos").
 
 % 1 - Condiciones magulladura
-fruta(negra, magulladura, alto, _, "magulladura").
+fruta(negra, magulladura, alto, "magulladura").
 
 
 % 2 - Condiciones cicatriz
-fruta(roja, herida, medio, _, "herida cicatrizada").
-fruta(roja, herida, alto, _, "heridas cicatrizadas").
-fruta(roja, herida, bajo, _, "herida cicatrizada").
+fruta(roja, herida, medio, "herida cicatrizada").
+fruta(roja, herida, alto, "heridas cicatrizadas").
+fruta(roja, herida, bajo, "herida cicatrizada").
 
 % 3 - Condiciones machucon
-fruta(roja, machucon, alto, _, "machucon").
-fruta(rosada, machucon, alto, _, "machucon").
+fruta(roja, machucon, alto, "machucon").
+fruta(rosada, machucon, alto, "machucon").
 
 % 4 - Condiciones perforacion
-fruta(roja, perforacion, medio, _, "perforacion cicatrizada").
-fruta(roja, perforacion, alto, _,"perforacion cicatrizada").
+fruta(roja, perforacion, medio,  "perforacion cicatrizada").
+fruta(roja, perforacion, alto, "perforacion cicatrizada").
 
 % 5 - Condiciones quemadura
-fruta(roja, quemadura, alto, _, "quemadura solar").
-fruta(roja, quemadura, medio, _, "quemadura solar").
+fruta(roja, quemadura, alto, "quemadura solar").
+fruta(roja, quemadura, medio, "quemadura solar").
+fruta(roja, quemadura, bajo, "quemadura leve").
 
 % 6 - Condiciones sin color
-fruta(blanca, _, _, _, "sin Color").
+fruta(blanca, _, _, "sin Color").
 
 % 7 - Condiciones partidura cicatrizada
-fruta(roja, partidura, medio, _, "partidura cicatrizada").
-fruta(negra, partidura, alto, _, "partidura cicatrizada").
+fruta(roja, partidura, medio, "partidura cicatrizada").
+fruta(negra, partidura, alto, "partidura cicatrizada").
 
 % 8 - Condiciones fruto arrugado
-fruta(roja, arruga, medio, _, "fruta arrugada").
-fruta(negra, arruga, alto, _, "fruta arrugada").
+fruta(roja, arruga, medio, "fruta arrugada").
+fruta(negra, arruga, alto, "fruta arrugada").
 
 % 9 - Condiciones cicatriz
-fruta(roja, cicatriz, medio, _, "cicatriz").
-fruta(roja, cicatriz, alto, _, "cicatriz").
+fruta(roja, cicatriz, medio, "cicatriz").
+fruta(roja, cicatriz, alto, "cicatriz").
 
 % 10 - Condiciones medialuna
-fruta(roja, medialuna, _, _, "medialuna").
+fruta(roja, medialuna, _, "medialuna").
 
 % 11 - Condiciones madurez excesiva
-fruta(roja, madurez, alto, _, "madurez excesiva").
+fruta(roja, madurez, alto, "madurez excesiva").
 
 % 12 - Condiciones abrasion
-fruta(roja, abrasion, medio, _, "abrasion").
-fruta(roja, abrasion, alto, _, "abrasion").
+fruta(roja, abrasion, medio, "abrasion").
+fruta(roja, abrasion, alto, "abrasion").
 
-entradaFruta(Coloracion, Mancha, Cobertura, Calibre, Defecto, Tamanio, Salida):-
-	fruta(Coloracion, Mancha, Cobertura, Calibre, Defecto),
+% Base logica que permite comparar variables
+igual(alto,alto).
+igual(medio,medio).
+igual(bajo,bajo).
+
+
+verificacionSalidaEmbalaje(S,Cober,Calibre):- 
+	igual(Cober,alto) -> S is 16; 
+	igual(Cober,medio) -> S is 16; 
+	igual(Cober,bajo) -> salidaEmbalaje(S,Calibre).  
+
+entradaFruta(Coloracion, Mancha, Cobertura, Calibre, Defecto, Tamanio, Salida, Mercado):-
+	fruta(Coloracion, Mancha, Cobertura, Defecto),
 	tamanio(Tamanio, Calibre),
-	salidaEmbalaje(Salida, Calibre).
-
+	verificacionSalidaEmbalaje(Salida,Cobertura,Calibre),
+	salida(Tamanio, Cobertura, Mercado),!.
