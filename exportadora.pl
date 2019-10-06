@@ -1,16 +1,34 @@
-% Colo de la fruta
+% ############## LABORATORIO N° 1 LOGICA Y TEORIA DE LA COMPUTACIÓN ####################
+
+% Integrantes: - Jorge Plaza 
+%              - Franco Labra
+%              - Bryan Santelices
+%              - Gabriel González
+
+
+%/////////////////  BASE DE CONOCIMIENTO  ////////////////////// 
+
+% coloracion("Color de la fruta").  
+
+% Color de la fruta
 coloracion(negra).
 coloracion(roja).
 coloracion(blanca).
 coloracion(rosada).
+%------------------------------------------
+
+% cobertura("nivel de la mancha"). 
 
 % Nivel de cobertura de manchas
 cobertura(alto).
 cobertura(medio).
 cobertura(bajo).
 cobertura(ninguno).	
+%------------------------------------------
 
-% Posibles manchas en la fruta
+% mancha("Tipo de mancha").
+
+% Posibles manchas en la fruta 
 mancha(quemadura).
 mancha(herida).
 mancha(machucon).
@@ -22,8 +40,11 @@ mancha(arruga).
 mancha(madurez).
 mancha(abrasion).
 
-%El fruto no tiene mancha
-mancha(nada).
+% El fruto no tiene mancha
+mancha(ninguno).
+% ------------------------------------------
+
+% calibre("Diametro de la fruta").
 
 % Define el diametro de la fruta
 calibre(18).
@@ -41,6 +62,9 @@ calibre(29).
 calibre(30).
 calibre(31).
 calibre(32).
+% ------------------------------------------
+
+% tamanio("tamaño de fruta","calibre de la fruta").
 
 % Tamanio segun el calibre de la fruta
 tamanio(pequenio, 18).
@@ -58,6 +82,9 @@ tamanio(grande, 29).
 tamanio(grande, 30).
 tamanio(grande, 31).
 tamanio(grande, 32).
+% ------------------------------------------
+
+% salidaEmbalaje("Banda de salida","Calibre de la fruta").
 
 % Salida embalajes
 salidaEmbalaje(1, 18).
@@ -75,80 +102,100 @@ salidaEmbalaje(12, 29).
 salidaEmbalaje(13, 30).
 salidaEmbalaje(14, 31).
 salidaEmbalaje(15, 32).
-salidaEmbalaje(16, desecho).
+% ------------------------------------------
+
+% salida("tamaño de la fruta","Cobertura de la fruta","tipo de portacion").
 
 % Fruto exportable
 salida(grande, ninguno, exportable).
 salida(mediano, ninguno, exportable).
+% ------------------------------------------
 
 % Fruto mercado interno
 salida(grande, bajo, interno).
 salida(mediano, bajo, interno).
 salida(pequenio, ninguno, interno).
+% ------------------------------------------
 
 % Fruto desechable
 salida(_, alto, desecho).
 salida(_, medio, desecho).
+salida(pequenio,bajo,desecho).
+% ------------------------------------------
 
-% fruta(Coloracion, mancha, cobertura, calibre, Defecto)
+% fruta("Coloracion", "mancha", "cobertura", "calibre", "Defecto").
 
 % Condiciones perfecto estado
 fruta(roja, _, ninguno, "sin defectos").
 fruta(negra, _, ninguno, "sin defectos").
-fruta(roja, nada, _, "sin defectos").
-fruta(negra, nada, _, "sin defectos").
+fruta(roja, ninguno, _, "sin defectos").
+fruta(negra, ninguno, _, "sin defectos").
 
 % 1 - Condiciones magulladura
-fruta(negra, magulladura, alto, "magulladura").
-
+fruta(_, magulladura, alto, "magulladura").
+fruta(_, magulladura, medio, "magulladura").
+fruta(_, magulladura, bajo, "magulladura leve").
 
 % 2 - Condiciones cicatriz
-fruta(roja, herida, medio, "herida cicatrizada").
-fruta(roja, herida, alto, "heridas cicatrizadas").
-fruta(roja, herida, bajo, "herida cicatrizada").
+fruta(_, herida, alto, "herida cicatrizadas").
+fruta(_, herida, medio, "heridas cicatrizadas").
+fruta(_, herida, bajo, "herida cicatrizada").
 
 % 3 - Condiciones machucon
-fruta(roja, machucon, alto, "machucon").
-fruta(rosada, machucon, alto, "machucon").
+fruta(_, machucon, alto, "machucon").
+fruta(_, machucon, medio, "machucon").
+fruta(_, machucon, bajo, "machucon leve").
 
 % 4 - Condiciones perforacion
-fruta(roja, perforacion, medio,  "perforacion cicatrizada").
-fruta(roja, perforacion, alto, "perforacion cicatrizada").
+fruta(_, perforacion, alto,  "perforacion cicatrizada").
+fruta(_, perforacion, medio, "perforacion cicatrizada").
+fruta(_, perforacion, bajo, "perforacion cicatrizada").
 
 % 5 - Condiciones quemadura
-fruta(roja, quemadura, alto, "quemadura solar").
-fruta(roja, quemadura, medio, "quemadura solar").
-fruta(roja, quemadura, bajo, "quemadura leve").
+fruta(_, quemadura, alto, "quemadura solar").
+fruta(_, quemadura, medio, "quemadura solar").
+fruta(_, quemadura, bajo, "quemadura solar leve").
 
 % 6 - Condiciones sin color
 fruta(blanca, _, _, "sin Color").
 
 % 7 - Condiciones partidura cicatrizada
-fruta(roja, partidura, medio, "partidura cicatrizada").
-fruta(negra, partidura, alto, "partidura cicatrizada").
+fruta(_, partidura, alto, "partidura cicatrizada").
+fruta(_, partidura, medio, "partidura cicatrizada").
+fruta(_, partidura, bajo, "partidura cicatrizada leve").
 
 % 8 - Condiciones fruto arrugado
-fruta(roja, arruga, medio, "fruta arrugada").
-fruta(negra, arruga, alto, "fruta arrugada").
+fruta(_, arruga, alto, "fruta arrugada").
+fruta(_, arruga, medio, "fruta arrugada").
+fruta(_, arruga, bajo, "fruta arrugada leve").
 
 % 9 - Condiciones cicatriz
-fruta(roja, cicatriz, medio, "cicatriz").
-fruta(roja, cicatriz, alto, "cicatriz").
+fruta(_, cicatriz, alto, "cicatriz").
+fruta(_, cicatriz, medio, "cicatriz").
+fruta(_, cicatriz, bajo, "cicatriz leve").
 
 % 10 - Condiciones medialuna
-fruta(roja, medialuna, _, "medialuna").
+fruta(_, medialuna, _, "medialuna").
 
 % 11 - Condiciones madurez excesiva
-fruta(roja, madurez, alto, "madurez excesiva").
+fruta(_, madurez, alto, "madurez excesiva").
+fruta(_, madurez, medio, "madurez excesiva").
+fruta(_, madurez, bajo, "madurez leve").
 
 % 12 - Condiciones abrasion
-fruta(roja, abrasion, medio, "abrasion").
-fruta(roja, abrasion, alto, "abrasion").
+fruta(_, abrasion, alto, "abrasion").
+fruta(_, abrasion, medio, "abrasion").
+fruta(_, abrasion, bajo, "abrasion leve").
+%---------------------------------------------------
 
 % Base logica que permite comparar variables
 igual(alto,alto).
 igual(medio,medio).
 igual(bajo,bajo).
+%---------------------------------------------------
+
+
+% ///////////////////////////////  PREDICADO Y CLAUSULAS ///////////////////////////////////////////
 
 
 verificacionSalidaEmbalaje(S,Cober,Calibre):- 
@@ -156,8 +203,9 @@ verificacionSalidaEmbalaje(S,Cober,Calibre):-
 	igual(Cober,medio) -> S is 16; 
 	igual(Cober,bajo) -> salidaEmbalaje(S,Calibre).  
 
-entradaFruta(Coloracion, Mancha, Cobertura, Calibre, Defecto, Tamanio, Salida, Mercado):-
-	fruta(Coloracion, Mancha, Cobertura, Defecto),
+
+entradaFruta(Coloracion, Mancha, Cobertura, Calibre, Defectos, Tamanio, Salida, Mercado):-
+	findall(Defecto, fruta(Coloracion, Mancha, Cobertura, Defecto), Defectos),
 	tamanio(Tamanio, Calibre),
 	verificacionSalidaEmbalaje(Salida,Cobertura,Calibre),
 	salida(Tamanio, Cobertura, Mercado),!.
